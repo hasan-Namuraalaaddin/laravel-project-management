@@ -22,3 +22,20 @@ use Illuminate\Support\Facades\Route;
 Route::apiResource('projects',ProjectController::class);
 Route::apiResource('tasks',TaskController::class);
 Route::apiResource('tags',TagController::class);
+Route::apiResource('users', UserController::class);
+
+Route::get('test', function() 
+{
+
+    $user = User::find(1)->projects;
+    return $user;
+});
+
+Route::get('test-project', function() {
+
+    $projects = Project::with('user')->get();
+    return $projects;
+});
+
+Route::post('tasks/{task}/tags',[TagController::class,'store']);
+Route::delete('tasks/{task}/tags/{tag}',[TagController::class,'destroy']);
