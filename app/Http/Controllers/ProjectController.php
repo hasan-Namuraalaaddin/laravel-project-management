@@ -21,8 +21,16 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $project = Project::create($request->all());
-        return response()->json($project);
+               $validationdata = $request->validate(
+            [
+               'title' => 'required|max:255',
+               'description' => 'required',
+               'user_id' => 'required',
+            ]
+            );
+            Project::create($validationdata);
+
+            return redirect('projects')->with('success', 'Project created successfully');
     }
 
     /**
