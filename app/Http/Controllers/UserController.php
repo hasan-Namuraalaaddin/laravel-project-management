@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class ProjectController extends Controller
+class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //$projects=auth()->user()->projects()->get();
-        $projects = Project::all();
+        $projects = User::all();
         return response()->json($projects);
     }
 
@@ -27,20 +23,20 @@ class ProjectController extends Controller
 
         $validationdata = $request->validate(
             [
-               'title' => 'required|max:255',
-               'description' => 'required',
-               'user_id' => 'required',
+               'name' => 'required|max:255',
+               'email' => 'required',
+               'password' => 'required',
             ]
             );
-            Project::create($validationdata);
+            User::create($validationdata);
 
-            return redirect('projects')->with('success', 'Project created successfully');
+            return redirect('users')->with('success', 'Project created successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Project $project)
+    public function show(User $project)
     {
         return response()->json($project);
 
@@ -49,7 +45,7 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, User $project)
     {
         $project->update($request->all());
         return response()->json($project);
@@ -58,7 +54,7 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $project)
+    public function destroy(User $project)
     {
         $project->delete();
         return response()->json($project);
