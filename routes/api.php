@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
     return $request->user();
 });
 
+<<<<<<< HEAD
 Route::middleware('auth:sanctum')->get('/myprojects',[ProjectController::class,'index']);
 Route::middleware('auth:sanctum','match_project')->get('/myprojects/{project}',[ProjectController::class,'show']);
 
@@ -40,3 +41,25 @@ Route::apiResource('tags', TagController::class);
 Route::apiResource('users', UserController::class);
 
 Route::post('/register', [AuthController::class, 'register']);
+=======
+Route::apiResource('projects',ProjectController::class);
+Route::apiResource('tasks',TaskController::class);
+Route::apiResource('tags',TagController::class);
+Route::apiResource('users', UserController::class);
+
+Route::get('test', function() 
+{
+
+    $user = User::find(1)->projects;
+    return $user;
+});
+
+Route::get('test-project', function() {
+
+    $projects = Project::with('user')->get();
+    return $projects;
+});
+
+Route::post('tasks/{task}/tags',[TagController::class,'store']);
+Route::delete('tasks/{task}/tags/{tag}',[TagController::class,'destroy']);
+>>>>>>> 281aea54c4437421a8d20a9bf7257b81cdd3bdcd
